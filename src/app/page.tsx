@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-
-import { client } from "@/lib/rpc"
+import { client } from "@/server/rpc"
 
 export default function Home() {
   const [message, setMessage] = useState<string>("")
