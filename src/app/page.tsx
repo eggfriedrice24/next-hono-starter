@@ -1,26 +1,29 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { client } from "@/server/rpc"
+import { useQuery } from "@tanstack/react-query"
 
 export default function Home() {
-  const [message, setMessage] = useState<string>("")
+  const query = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const response = await client.api.tasks.$get()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await client.api.hello.$get()
-        const { message } = await res.json()
-        setMessage(message)
-      } catch (e) {
-        console.log(e)
+      if (!response.ok) {
+        throw new Error("sss")
       }
-    }
 
-    void fetchData()
-  }, [])
+      const d = await response.json()
 
-  if (!message) return <p>Loading...</p>
+      return d
+    },
+  })
 
-  return <p>{message}</p>
+  return (
+    <div>
+      {query.isPending
+        ? "loading...."
+        : query.data?.map((i) => <div key={i.id}>{i.title}</div>)}
+    </div>
+  )
 }

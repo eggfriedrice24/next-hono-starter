@@ -1,17 +1,10 @@
+import taskRoutes from "@/features/tasks/routes/tasks.routes"
 import { Hono } from "hono"
 import { handle } from "hono/vercel"
 
-export const runtime = "edge"
-
 const app = new Hono().basePath("/api")
 
-const hello = new Hono().get("/", (c) => {
-  return c.json({
-    message: "Hello sssssssssss!",
-  })
-})
-
-const routes = app.route("/hello", hello)
+const routes = app.route("/", taskRoutes)
 
 export const GET = handle(app)
 
