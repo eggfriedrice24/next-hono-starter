@@ -5,10 +5,14 @@ export const runtime = "edge"
 
 const app = new Hono().basePath("/api")
 
-app.get("/hello", (c) => {
+const hello = app.get("/hello", (c) => {
   return c.json({
     message: "Hello sssssssssss!",
   })
 })
 
+const routes = app.route("/hello", hello)
+
 export const GET = handle(app)
+
+export type AppType = typeof routes
