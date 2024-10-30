@@ -6,12 +6,16 @@ const config = {
   },
   "plugins": [
     "@typescript-eslint",
-    "drizzle"
+    "drizzle",
+    "tailwindcss"
   ],
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked"
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "prettier",
+    "plugin:tailwindcss/recommended",
+
   ],
   "rules": {
     "@typescript-eslint/array-type": "off",
@@ -56,6 +60,17 @@ const config = {
         ]
       }
     ]
-  }
+  },
+  settings: {
+    tailwindcss: {
+      callees: ["cn", "cva"],
+      config: "./tailwind.config.ts",
+      classRegex: "^(class(Name)?|tw)$",
+    },
+    next: {
+      rootDir: ["./"],
+    },
+  },
+
 }
 module.exports = config;
